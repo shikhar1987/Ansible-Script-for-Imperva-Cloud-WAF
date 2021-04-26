@@ -1,0 +1,40 @@
+---
+
+- name: Imperva Demo
+  hosts: localhost
+  vars:
+    api_id: <Get this from Imperva MY Portal>
+    api_key: <Get this from Imperva MY Portal>
+    account_id: <Get this from Imperva MY Portal>
+    domain: <domain which you wish to onboard>
+    site_ip: <Origin IP Address>
+    send_site_setup_emails: false
+    force_ssl: true
+
+
+  tasks:
+
+# For getting account Status
+#  - name: Get Account Status
+#    uri:
+#      url: https://my.imperva.com/api/prov/v1/account?api_id={{api_id}}&api_key={{api_key}}&account_id={{account_id}}
+#      method: POST
+#      return_content: yes
+#    register: result
+  
+#  - name: Print information
+#    ansible.builtin.debug:
+#      var: result
+
+# For onboarding a website
+
+  - name: Onboarding a website
+    uri:
+      url: https://my.imperva.com/api/prov/v1/sites/add?api_id={{api_id}}&api_key={{api_key}}&account_id={{account_id}}&domain={{domain}}&site_ip={{site_ip}}&send_site_setup_emails={{send_site_setup_emails}}&force_ssl={{force_ssl}}
+      method: POST
+      return_content: yes
+    register: onboarding_output
+
+  - name: Print Onboarding information
+    ansible.builtin.debug:
+      var: onboarding_output
